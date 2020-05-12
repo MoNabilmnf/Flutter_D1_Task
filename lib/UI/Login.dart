@@ -22,9 +22,9 @@ class LoginState extends State<Login>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue,
       body: Stack(
         children: <Widget>[
-
           Container(
             padding: EdgeInsets.all(22.0),
             color: Colors.blue,
@@ -130,7 +130,35 @@ class LoginState extends State<Login>{
                 Container(
                   padding: EdgeInsets.only(top: 42.0),
                   alignment: Alignment.center,
-                  child : CustomWidget().buildSignupBtn(context,Registeration(),'Don\'t have an Account? ','Sign Up'),
+                  child : new GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/Registeration');
+                    },
+                    child: RichText(
+                  text: TextSpan(
+                  children: [
+                  TextSpan(
+                    text: 'Don\'t have an Account? ',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+
+                  TextSpan(
+                    text: 'Sign Up',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  ],
+                ),
+            ),
+                  ),
+                  
                 ),
               ],
             ),),

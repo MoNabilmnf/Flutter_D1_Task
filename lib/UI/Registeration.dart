@@ -19,6 +19,10 @@ class RegisterationState extends State<Registeration>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
+      appBar: AppBar(
+        title: new Text("Registration page"),
+      ),
+      backgroundColor: Colors.blue,
       body: Stack(
         children: <Widget>[
           Container(
