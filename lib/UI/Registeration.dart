@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:connectivity/connectivity.dart';
+import 'package:task2/UI/Home.dart';
 import 'Login.dart';
 import 'Widgets.dart';
 import 'constants.dart';
-
+import 'dart:io';
 class Registeration extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
@@ -187,7 +188,30 @@ class RegisterationState extends State<Registeration>{
                   margin: EdgeInsets.only(bottom: 18.0),
                 ),
 
-                CustomWidget().build_Login_or_Registration_Btn("REGISTER","Registration Button Pressed"),
+                //CustomWidget().build_Login_or_Registration_Btn("REGISTER",context),
+                 Container(
+                    padding: EdgeInsets.symmetric(vertical: 10.0),
+                    width: double.infinity,
+                     child: RaisedButton(
+                     elevation: 5.0,
+                       onPressed:_CheckInternetConnection,
+                      padding: EdgeInsets.all(10.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                         ),
+                          color: Colors.white,
+        child: Text(
+          'REGISTER',
+           style: TextStyle(
+            color: Color(0xFF527DAA),
+            letterSpacing: 1.5,
+            fontSize: 18.0,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'OpenSans',
+          ),
+        ),
+      ),
+    ),
 
                 Container(
                   padding: EdgeInsets.only(top: 18.0,bottom: 7.0),
@@ -200,6 +224,39 @@ class RegisterationState extends State<Registeration>{
         ],
       ),
     );
-  }
 
+  }
+  _CheckInternetConnection() async{
+    print("Check 1");
+    try {
+      final result = await InternetAddress.lookup('paymac.net');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print('connected');
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (BuildContext context) => Home()));
+      }
+    } on SocketException catch (_) {
+      print('not connected');
+      _showDialoge();
+    }
+  }
+  _showDialoge(){
+    showDialog(context: context,
+        builder: (context){
+          return AlertDialog(
+            title: Text("Internet Connection"),
+            content: Text("please check your internet connection"),
+            actions: <Widget>[
+              FlatButton(
+                child: Text("Try Again"),
+                onPressed: (){
+                  Navigator.of(context).pop();
+                  _CheckInternetConnection();
+                },
+              )
+            ],
+          );
+        }
+    );
+  }
 }
